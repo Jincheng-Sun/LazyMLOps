@@ -40,7 +40,7 @@ stages:
             path: s/templates
             fetchTags: false
 
-          - template: templates/pipelines/azure-devops/install-requirements.yaml
+          - template: azureml/pipelines/azure-devops/steps/install-requirements.yaml
             parameters:
               environment: ${{ parameters.environment }}
               requirementsFile: ${{ variables.requirementsFile }}

@@ -4,7 +4,7 @@ parameters:
     default: "dev"
   - name: requirementsFile
     type: string
-    default: "requirements_azureml.txt"
+    default: "requirements.txt"
   - name: devIndexUrl
     type: string
     default: "https://pypi.org/simple"
