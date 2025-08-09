@@ -52,6 +52,7 @@ def main(data_config_path: str,
     logger.info(f"[INFO] Data Asset {data_asset.name}:{data_asset.version} created successfully "
                 f"in {ml_client.workspace_name}"
                 )
+    del ml_client
 
 
 if __name__ == "__main__":

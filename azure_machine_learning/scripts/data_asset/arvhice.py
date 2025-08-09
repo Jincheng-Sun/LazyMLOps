@@ -37,6 +37,7 @@ def main(name: str,
     ml_client = get_ml_client(workspace_info=workspace_info, logger=logger)
     ml_client.data.archive(name=name, version=version)
     logger.info(f"[INFO] Data Asset {name}:{version} archived successfully in {ml_client.workspace_name}")
+    del ml_client
 
 
 if __name__ == "__main__":

@@ -2,6 +2,9 @@ parameters:
   - name: environment
     type: string
     default: "dev"
+  - name: requirementsFile
+    type: string
+    default: "requirements.txt"
   - name: variableFile
     type: string
     default: "azure-pipelines-variables.yaml"
@@ -40,7 +43,23 @@ stages:
             path: s/templates
             fetchTags: false
 
-          - template: azureml/pipelines/azure-devops/steps/install-requirements.yaml
+          - template: templates/azure_machine_learning/pipelines/azure-devops/steps/az-login.yaml
+            parameters:
+              clientIdSecretKey: ${{ variables.clientIdSecretKey }}
+              clientSecretSecretKey: ${{ variables.clientSecretSecretKey }}
+              tenantSecretKey: ${{ variables.tenantSecretKey }}
+              subscriptionSecretKey: ${{ variables.subscriptionSecretKey }}
+              azConfigDir: ${{ variables.azConfigDir }}
+
+          - template: templates/azure_machine_learning/pipelines/azure-devops/steps/install-requirements.yaml
+            parameters:
+              environment: ${{ parameters.environment }}
+              requirementsFile: ${{ parameters.requirementsFile }}
+              devIndexUrl: ${{ variables.devIndexUrl }}
+              stagingIndexUrl: ${{ variables.stagingIndexUrl }}
+              prodIndexUrl: ${{ variables.prodIndexUrl }}
+
+          - template: templates/azure_machine_learning/pipelines/azure-devops/steps/register-data-asset.yaml
             parameters:
               environment: ${{ parameters.environment }}
               requirementsFile: ${{ variables.requirementsFile }}
@@ -48,6 +67,6 @@ stages:
               stagingIndexUrl: ${{ variables.stagingIndexUrl }}
               prodIndexUrl: ${{ variables.prodIndexUrl }}
 
-          - template: templates/pipelines/azure-devops/azureml/create-data-asset.yaml
+          - template: templates/azure_machine_learning/pipelines/azure-devops/steps/az-logout.yaml
             parameters:
-              ...
+              azConfigDir: ${{ variables.azConfigDir }}
