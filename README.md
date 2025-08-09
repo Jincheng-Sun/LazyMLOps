@@ -1,2 +1,2 @@
 # LazyMLOps
-A cloud platform focused MLOps pipelines
+A starter MLOps framework on mainstream cloud platforms
